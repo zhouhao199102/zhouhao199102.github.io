@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <link rel="stylesheet" href="css/jemdoc.css" type="text/css" />
 <link rel="stylesheet" href="css/jacob.css" type="text/css" />
-<title>jemdoc &ndash; html changes</title>
+<title>notes</title>
 </head>
 <body>
 <!-- MathJax -->
@@ -45,17 +45,45 @@ _gaq.push(['_trackPageview']);
 </td>
 <td id="layout-content">
 <div id="toptitle">
-<h1>jemdoc &ndash; html changes</h1>
+<h1>notes</h1>
 </div>
+<div class="infoblock">
+<div class="blockcontent">
+<h1>python codes</h1>
+<p>{Interactive Python listing}{pyint}
+&gt;&gt;&gt; print 'Interactive Python code.&rsquo;
+'Interactive Python code.&rsquo;
+</p>
+</div></div>
+<h2>Inline equations</h2>
+<p>The conjugate function \(f^\star(y) = \sup_{x \in X}(y^Tx - f(x))\) appears here
+inline, and is in the variable \(y\). Dollar signs (<tt>$</tt>) surround the LaTeX
+equation in the jemdoc source.
+</p>
+<h2>Equations on separate lines</h2>
+<p>To render an equation on its own line, use backslash-escaped round brackets
+(<tt>\(</tt> and <tt>\)</tt>). For example, the identity
+</p>
+<p style="text-align:center">
+\[
+(I + XY)^{-1} = I - X(I + YX)^{-1}Y
+\]
+</p><p>is typeset on its own line. Yes, round brackets instead of square
+brackets&#8201;&mdash;&#8201;this is to avoid a conflict with ordinary square brackets that are
+escaped to avoid being a link.  Sorry.
+</p>
 <div class="codeblock">
-<div class="blocktitle">Interactive Python listing</div>
+<div class="blocktitle">Syntax</div>
 <div class="blockcontent"><pre>
-<span class="pycommand">&gt;&gt;&gt; print 'Interactive Python code.'</span>
-'Interactive Python code.'
+The identity
+\(
+    (I \+ XY)^{-1} = I - X(I \+ YX)^{-1}Y
+\)
+is typeset on its own line.
 </pre></div></div>
 <div id="footer">
 <div id="footer-text">
-Page generated 2023-11-09 15:40:49 CST, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
+Page generated 2023-11-09 15:46:52 CST, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
 </div>
 </div>
 </td>
