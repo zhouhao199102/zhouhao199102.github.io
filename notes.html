@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <link rel="stylesheet" href="css/jemdoc.css" type="text/css" />
 <link rel="stylesheet" href="css/jacob.css" type="text/css" />
-<title>jemdoc &ndash; vim, make</title>
+<title>jemdoc &ndash; html changes</title>
 </head>
 <body>
 <!-- MathJax -->
@@ -39,80 +39,65 @@ _gaq.push(['_trackPageview']);
 <div class="menu-category">research</div>
 <div class="menu-item"><a href="using.html">Published&nbsp;papars</a></div>
 <div class="menu-category">Teaching</div>
-<div class="menu-item"><a href="htmlchanges.html">Teaching&nbsp;notes</a></div>
+<div class="menu-item"><a href="htmlchanges.html" class="current">Teaching&nbsp;notes</a></div>
 <div class="menu-category">miscellaneous</div>
-<div class="menu-item"><a href="stuff.html" class="current">Contact</a></div>
+<div class="menu-item"><a href="stuff.html">Contact</a></div>
 </td>
 <td id="layout-content">
 <div id="toptitle">
-<h1>jemdoc &ndash; vim, make</h1>
+<h1>jemdoc &ndash; html changes</h1>
 </div>
-<h2>Vim syntax highlighting</h2>
-<p>Here is a vim syntax file <a href="dist/jemdoc.vim"
-onclick="javascript:urchinTracker('/downloads/jemdoc.vim');">jemdoc.vim</a>.
-You should download it to
-<tt>~/.vim/syntax/</tt>. You may also need to add the following lines in your
-<tt>~/.vimrc</tt>:
+<p>jemdoc has a built-in default configuration. This configuration includes the
+particular html tags used when producing html. If you wish to adjust the html
+that jemdoc produces, you can provide a configuration file to override the
+built-in defaults.
+</p>
+<h2>Example html change</h2>
+<p>Suppose you wanted to add <a href="http://www.google.com/analytics/" target=&ldquo;blank&rdquo;>Google
+Analytics</a> tracking to your website. That requires adding a short section of
+html before the <tt>&lt;/body&gt;</tt> tag.
+</p>
+<p>First, find out which block needs to be changed by using
 </p>
 <div class="codeblock">
-<div class="blocktitle">Additional <tt>~/.vimrc</tt> lines</div>
 <div class="blockcontent"><pre>
-filetype plugin on
-augroup filetypedetect
-	au! BufNewFile,BufRead *.jemdoc setf jemdoc
-augroup END
-
-" Last line is for proper wrapping of jemdoc lists, etc.
-autocmd Filetype jemdoc setlocal comments=:#,fb:-,fb:.,fb:--,fb:..,fb:\:
+jemdoc --show-config
 </pre></div></div>
-<h2>Makefile</h2>
-<p>Here's a small example of a <a href="dist/Makefile"
-onclick="javascript:urchinTracker('/downloads/Makefile');">Makefile</a>.
-A listing of it follows.
-</p>
-<p>This file would be used as follows:
-</p>
-<ul>
-<li><p>Edit <tt>index.jemdoc</tt> and <tt>otherpage.jemdoc</tt> at will.
-</p>
-</li>
-<li><p>Type <tt>make</tt> in the same directory, and files <tt>html/index.html</tt> and
-<tt>html/otherpage.html</tt> will be updated as necessary.
-</p>
-</li>
-<li><p>Type <tt>make update</tt> and your files will be copied to the server.
-</p>
-</li>
-<li><p>Type <tt>make clean</tt> and old <tt>html</tt> files in <tt>html/</tt> will be removed.
-</p>
-</li>
-</ul>
-<p>Rinse and repeat.
+<p>This prints the default html configuration. From this, the relevant
+configuration block (the one which includes the <tt>&lt;/body&gt;</tt> tag) has a title
+<tt>[bodyend]</tt>, and looks like
 </p>
 <div class="codeblock">
-<div class="blocktitle">Makefile example</div>
 <div class="blockcontent"><pre>
-DOCS=index otherpage
-
-HDOCS=$(addsuffix .html, $(DOCS))
-PHDOCS=$(addprefix html/, $(HDOCS))
-
-.PHONY : docs
-docs : $(PHDOCS)
-
-.PHONY : update
-update : $(PHDOCS)
-	@echo -n 'Copying to server...'
-	# insert code for copying to server here.
-	@echo ' done.'
-
-html/%.html : %.jemdoc MENU
-	jemdoc -o $@ $&lt;
-
-.PHONY : clean
-clean :
-	-rm -f html/*.html
+[bodyend]
+&lt;/body&gt;
+&lt;/html&gt;
 </pre></div></div>
+<p>Create a new file <tt>mysite.conf</tt>, say, and put a new <tt>[bodyend]</tt> block
+inside it. The new file looks like this:
+</p>
+<div class="codeblock">
+<div class="blockcontent"><pre>
+[bodyend]
+&lt;script src="http://www.google-analytics.com/urchin.js" type="text/javascript"&gt;
+&lt;/script&gt;
+&lt;script type="text/javascript"&gt;
+_uacct = "UA-0000000-0";
+urchinTracker();
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></div></div>
+<p>Include your new configuration file, with the <tt>-c</tt> option (<a href="using.html" target=&ldquo;blank&rdquo;>more
+details here</a>):
+</p>
+<div class="codeblock">
+<div class="blockcontent"><pre>
+jemdoc -c mysite.conf index.jemdoc
+</pre></div></div>
+<p>This will pull in the new <tt>[bodyend]</tt> block from <tt>mysite.conf</tt>, but otherwise
+work as before.
+</p>
 <div id="footer">
 <div id="footer-text">
 Page generated 2023-11-09 14:23:17 CST, by <a href="https://github.com/wsshin/jemdoc_mathjax" target="blank">jemdoc+MathJax</a>.
